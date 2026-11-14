@@ -242,72 +242,78 @@ private fun FlashcardsGame(questions: List<Question>, host: GameHost) {
     val queue = remember { mutableStateListOf<Question>().apply { addAll(questions) } }
     var known by remember { mutableIntStateOf(0) }
     var flipped by remember { mutableStateOf(false) }
+    // Incremented on every grade. The card UI is keyed by it, so the next card starts face up
+    // instead of animating back from the flipped state (which briefly showed its answer).
+    var step by remember { mutableIntStateOf(0) }
     LaunchedEffect(known) { host.progress(known, questions.size) }
     if (queue.isEmpty()) { LaunchedEffect(Unit) { host.finish() }; return }
     val q = queue.first()
-    val rotation by animateFloatAsState(if (flipped) 180f else 0f, tween(350), label = "flip")
+    key(step) {
+        val rotation by animateFloatAsState(if (flipped) 180f else 0f, tween(350), label = "flip")
 
-    Column(Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
-            Modifier.weight(1f).fillMaxWidth()
-                .graphicsLayer { rotationY = rotation; cameraDistance = 14 * density },
-        ) {
-            ElevatedCard(
-                onClick = { flipped = !flipped },
-                modifier = Modifier.fillMaxSize(),
-                colors = CardDefaults.elevatedCardColors(
-                    containerColor = if (rotation > 90f) MaterialTheme.colorScheme.primaryContainer
-                    else MaterialTheme.colorScheme.surfaceContainerHigh,
-                ),
+        Column(Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                Modifier.weight(1f).fillMaxWidth()
+                    .graphicsLayer { rotationY = rotation; cameraDistance = 14 * density },
             ) {
-                Box(Modifier.fillMaxSize().graphicsLayer { if (rotation > 90f) rotationY = 180f }.padding(24.dp)) {
-                    val showBack = rotation > 90f
-                    val text = if (showBack) q.answer else q.prompt
-                    val lang = if (showBack) q.answerLang else q.promptLang
-                    Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
-                        if (showBack) {
-                            Text(q.prompt, style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-                            Spacer(Modifier.height(12.dp))
+                ElevatedCard(
+                    onClick = { flipped = !flipped },
+                    modifier = Modifier.fillMaxSize(),
+                    colors = CardDefaults.elevatedCardColors(
+                        containerColor = if (rotation > 90f) MaterialTheme.colorScheme.primaryContainer
+                        else MaterialTheme.colorScheme.surfaceContainerHigh,
+                    ),
+                ) {
+                    Box(Modifier.fillMaxSize().graphicsLayer { if (rotation > 90f) rotationY = 180f }.padding(24.dp)) {
+                        val showBack = rotation > 90f
+                        val text = if (showBack) q.answer else q.prompt
+                        val lang = if (showBack) q.answerLang else q.promptLang
+                        Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                            if (showBack) {
+                                Text(q.prompt, style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                                Spacer(Modifier.height(12.dp))
+                            }
+                            Text(text, fontSize = promptSize(text), fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+                            if (showBack && q.card.memo.isNotBlank()) {
+                                Spacer(Modifier.height(12.dp))
+                                Text(q.card.memo, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
+                            }
                         }
-                        Text(text, fontSize = promptSize(text), fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
-                        if (showBack && q.card.memo.isNotBlank()) {
-                            Spacer(Modifier.height(12.dp))
-                            Text(q.card.memo, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
-                        }
+                        SpeakButton(text, lang, host, Modifier.align(Alignment.TopEnd))
+                        if (!showBack) Text(stringResource(R.string.tap_to_flip), Modifier.align(Alignment.BottomCenter),
+                            style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    SpeakButton(text, lang, host, Modifier.align(Alignment.TopEnd))
-                    if (!showBack) Text(stringResource(R.string.tap_to_flip), Modifier.align(Alignment.BottomCenter),
-                        style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
-        }
-        Spacer(Modifier.height(16.dp))
-        if (!flipped) {
-            Button(onClick = { flipped = true }, Modifier.fillMaxWidth().height(56.dp)) { Text(stringResource(R.string.show_answer)) }
-        } else Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            val now = remember(q) { System.currentTimeMillis() }
-            Grade.entries.forEach { g ->
-                val color = when (g) {
-                    Grade.AGAIN -> Bad
-                    Grade.HARD -> Color(0xFFE08A1E)
-                    Grade.GOOD -> Good
-                    Grade.EASY -> SkBlue
-                }
-                Button(
-                    onClick = {
-                        host.grade(q, g)
-                        queue.removeAt(0)
-                        if (g == Grade.AGAIN) queue.add(q) else known++ // a forgotten card is shown again at the end
-                        flipped = false
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White),
-                    contentPadding = PaddingValues(horizontal = 4.dp),
-                    modifier = Modifier.weight(1f).height(64.dp),
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(stringResource(g.label), maxLines = 1)
-                        Text(durationLabel(Srs.previewDelay(q.card, g, now)), style = MaterialTheme.typography.labelSmall, maxLines = 1)
+            Spacer(Modifier.height(16.dp))
+            if (!flipped) {
+                Button(onClick = { flipped = true }, Modifier.fillMaxWidth().height(56.dp)) { Text(stringResource(R.string.show_answer)) }
+            } else Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                val now = remember(q) { System.currentTimeMillis() }
+                Grade.entries.forEach { g ->
+                    val color = when (g) {
+                        Grade.AGAIN -> Bad
+                        Grade.HARD -> Color(0xFFE08A1E)
+                        Grade.GOOD -> Good
+                        Grade.EASY -> SkBlue
+                    }
+                    Button(
+                        onClick = {
+                            host.grade(q, g)
+                            queue.removeAt(0)
+                            if (g == Grade.AGAIN) queue.add(q) else known++ // a forgotten card is shown again at the end
+                            flipped = false
+                            step++
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White),
+                        contentPadding = PaddingValues(horizontal = 4.dp),
+                        modifier = Modifier.weight(1f).height(64.dp),
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(stringResource(g.label), maxLines = 1)
+                            Text(durationLabel(Srs.previewDelay(q.card, g, now)), style = MaterialTheme.typography.labelSmall, maxLines = 1)
+                        }
                     }
                 }
             }
