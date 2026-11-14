@@ -1,0 +1,6 @@
+<resources>
+    <!-- Dark window background so there is no white flash on launch in dark mode -->
+    <style name="Theme.FlashCards" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/window_bg</item>
+    </style>
+</resources>

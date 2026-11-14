@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Kartičky</string>
+
+    <!-- Common -->
+    <string name="back">Back</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="done">Done</string>
+    <string name="create">Create</string>
+    <string name="next">Next</string>
+    <string name="speak">Pronounce</string>
+    <string name="listen">Listen</string>
+    <string name="settings">Settings</string>
+    <string name="statistics">Statistics</string>
+    <string name="cards">Cards</string>
+    <string name="start">Start</string>
+    <string name="all">All</string>
+    <string name="chip_count">%1$s (%2$d)</string>
+    <string name="error_msg">Error: %s</string>
+
+    <plurals name="cards_count">
+        <item quantity="one">%d card</item>
+        <item quantity="other">%d cards</item>
+    </plurals>
+    <plurals name="days_count">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="answers_count">
+        <item quantity="one">%d answer</item>
+        <item quantity="other">%d answers</item>
+    </plurals>
+
+    <string name="dur_min">%d min</string>
+    <string name="dur_hours">%d h</string>
+    <string name="dur_days">%d d</string>
+
+    <!-- Grades and genders -->
+    <string name="grade_again">Forgot</string>
+    <string name="grade_hard">Hard</string>
+    <string name="grade_good">Good</string>
+    <string name="grade_easy">Easy</string>
+    <string name="gender_m">masc.</string>
+    <string name="gender_f">fem.</string>
+    <string name="gender_n">neut.</string>
+
+    <!-- Game modes -->
+    <string name="mode_flashcards">Flashcards</string>
+    <string name="mode_flashcards_desc">Flip the card and rate how well you remember it</string>
+    <string name="mode_quiz">Quiz</string>
+    <string name="mode_quiz_desc">Pick the translation from 4 options</string>
+    <string name="mode_typing">Typing</string>
+    <string name="mode_typing_desc">Type the translation</string>
+    <string name="mode_listening">Listening</string>
+    <string name="mode_listening_desc">Listen to the word and pick the translation</string>
+    <string name="mode_dictation">Dictation</string>
+    <string name="mode_dictation_desc">Listen and write it in Slovak</string>
+    <string name="mode_match">Pairs</string>
+    <string name="mode_match_desc">Match words with their translations</string>
+    <string name="mode_true_false">True / False</string>
+    <string name="mode_true_false_desc">Quickly decide whether the translation fits</string>
+    <string name="mode_scramble">Build the word</string>
+    <string name="mode_scramble_desc">Put the word together from letters</string>
+    <string name="mode_gender">Gender</string>
+    <string name="mode_gender_desc">ten, tá or to? (mark noun genders first)</string>
+    <string name="direction_mixed">Mixed</string>
+    <string name="sel_today">For today</string>
+    <string name="sel_review">Reviews</string>
+    <string name="sel_new">New</string>
+    <string name="sel_hard">Hard</string>
+    <string name="sel_weak">Weak</string>
+    <string name="sel_all">All</string>
+
+    <!-- Home -->
+    <string name="import_backup">Import backup</string>
+    <string name="export_backup">Export backup (.json)</string>
+    <string name="new_deck_fab">Deck</string>
+    <string name="no_decks">No decks yet</string>
+    <string name="no_decks_hint">Import a backup from Flashcards Maker (CardsBackup.zip) or create a deck manually.</string>
+    <string name="create_deck">Create deck</string>
+    <string name="new_deck">New deck</string>
+    <string name="name">Name</string>
+    <string name="import_done">Import finished: %s</string>
+    <string name="import_new_decks">new decks: %d</string>
+    <string name="import_merged_decks">updated decks: %d</string>
+    <string name="import_added">cards added: %d</string>
+    <string name="import_updated">cards updated: %d</string>
+    <string name="import_error">Import error: %s</string>
+    <string name="export_done">Backup saved</string>
+    <string name="export_error">Export error: %s</string>
+    <string name="deck_summary">%1$s · learned %2$d</string>
+    <string name="deck_today">Today: review %1$d · new %2$d</string>
+    <string name="streak_in_row">%s in a row</string>
+    <string name="start_streak">Start your streak today</string>
+    <string name="goal_done">Today\'s goal reached ✓ (%s)</string>
+    <string name="goal_progress">Today: %1$d of %2$d answers</string>
+
+    <!-- Deck -->
+    <string name="rename">Rename</string>
+    <string name="rename_deck">Rename deck</string>
+    <string name="reset_progress">Reset progress</string>
+    <string name="delete_deck">Delete deck</string>
+    <string name="confirm_delete_deck">Delete deck “%s” with all its cards?</string>
+    <string name="confirm_reset">Reset learning progress for all cards in this deck?</string>
+    <string name="reset">Reset</string>
+    <string name="free_practice">Free practice</string>
+    <string name="mode">Mode</string>
+    <string name="direction">Direction</string>
+    <string name="which_cards">Which cards</string>
+    <string name="topic">Topic</string>
+    <string name="all_topics">All topics</string>
+    <string name="how_many">How many</string>
+    <string name="start_practice">Start practice</string>
+    <string name="needs_4_cards">This mode needs at least 4 cards in the deck</string>
+    <string name="practice_note">In free practice mistakes count too, but correct answers don\'t move a word ahead of its review date.</string>
+    <string name="today_done">All done for today! 🎉</string>
+    <string name="today_done_hint">New reviews will appear tomorrow. You can practice in free mode below.</string>
+    <string name="learn_today">Study today</string>
+    <string name="to_review">to review</string>
+    <string name="new_label">new</string>
+    <string name="not_started">Not started yet: %d. New words arrive in daily portions.</string>
+    <string name="stat_total">total</string>
+    <string name="stat_learned">learned</string>
+    <string name="stat_hard">hard</string>
+
+    <!-- Card list -->
+    <string name="cards_title">Cards (%d)</string>
+    <string name="selected_count">Selected: %d</string>
+    <string name="select_all">Select all</string>
+    <string name="search">Search</string>
+    <string name="filter_hard">Hard (%d)</string>
+    <string name="filter_new">New</string>
+    <string name="filter_no_topic">No topic</string>
+    <string name="sort_order">Order</string>
+    <string name="sort_alpha">A–Z</string>
+    <string name="sort_level">Level</string>
+    <string name="sort_lapses">Mistakes</string>
+    <string name="hard_hint">You often forget these words. Try rephrasing the translation or add a memory hint in the note — editing resets the mistake counter.</string>
+    <string name="select_hint">Long press to select several cards (e.g. to set a topic)</string>
+    <string name="select_hint_selecting">Tap cards to add them to the selection. Back cancels the selection.</string>
+    <string name="lapses_badge">⚠ mistakes: %d</string>
+    <string name="confirm_delete_selected">Delete the selected cards (%d)?</string>
+    <string name="bulk_topic_title">Topic for selected</string>
+    <string name="topic_field">New or existing topic</string>
+    <string name="tap_topic">Tap a topic to choose it:</string>
+    <string name="remove">Remove</string>
+    <string name="new_card">New card</string>
+    <string name="card">Card</string>
+    <string name="field_word">Slovak</string>
+    <string name="field_translation">Translation</string>
+    <string name="field_note">Note (optional)</string>
+    <string name="field_gender">Gender (for nouns)</string>
+    <string name="field_topics">Topics, comma-separated</string>
+    <string name="card_new_status">new</string>
+    <string name="card_status">Level %1$d · review: %2$s · mistakes: %3$d</string>
+    <string name="added_count">Added: %d</string>
+    <string name="dup_same">This word already exists:</string>
+    <string name="dup_similar">Similar:</string>
+    <string name="dup_translation">This translation already exists for:</string>
+    <string name="open">open</string>
+    <string name="and_more">and %d more</string>
+
+    <!-- Games -->
+    <string name="no_voice">Your phone has no Slovak voice.\nInstall it: Settings → Text-to-speech → Google → Install voice data.</string>
+    <string name="empty_gender">No words with a marked gender.\nOpen the card list and set ten, tá or to for nouns.</string>
+    <string name="empty_today">All done for today! 🎉\nCome back tomorrow or practice in free mode.</string>
+    <string name="empty_review">Nothing to review yet 🎉</string>
+    <string name="empty_new">No new cards 🎉</string>
+    <string name="empty_hard">No hard words 🎉</string>
+    <string name="empty_weak">No weak cards 🎉</string>
+    <string name="empty_topic">No cards in topic “%s”</string>
+    <string name="empty_deck">The deck has no cards</string>
+    <string name="tap_to_flip">tap to flip</string>
+    <string name="show_answer">Show answer</string>
+    <string name="correct">Correct!</string>
+    <string name="almost">Almost! Check the spelling:</string>
+    <string name="counted">Counted</string>
+    <string name="correct_answer">Correct answer:</string>
+    <string name="correct_is">Correct:</string>
+    <string name="mistake_correct_is">Wrong. Correct:</string>
+    <string name="dont_know">I don\'t know</string>
+    <string name="check">Check</string>
+    <string name="i_was_right">I was right</string>
+    <string name="what_heard">What did you hear?</string>
+    <string name="hint">hint: %s</string>
+    <string name="tap_to_listen">tap to listen again</string>
+    <string name="which_gender">Which gender?</string>
+    <string name="true_">True</string>
+    <string name="false_">False</string>
+    <string name="streak_record">Streak: %1$d · best: %2$d</string>
+    <string name="match_title">Match the pairs</string>
+    <string name="result_perfect">Perfect! 🏆</string>
+    <string name="result_great">Great! 🎉</string>
+    <string name="result_ok">Not bad 👍</string>
+    <string name="result_more">Keep practicing 💪</string>
+    <string name="first_try">Correct on the first try: %1$d of %2$d</string>
+    <string name="repeat_mistakes">Repeat mistakes (%d)</string>
+    <string name="another_round">Another round</string>
+    <string name="mistakes">Mistakes</string>
+
+    <!-- Statistics -->
+    <string name="best_streak">Best: %s</string>
+    <string name="today_stats">Today: %1$d of %2$d answers · new words %3$d of %4$d</string>
+    <string name="streak_rule">A day counts toward the streak when the daily goal is reached.</string>
+    <string name="tile_learned">learned</string>
+    <string name="tile_of">of %d</string>
+    <string name="tile_mastered">mastered</string>
+    <string name="tile_level5">level 5+</string>
+    <string name="tile_accuracy">accuracy</string>
+    <string name="tile_7days">last 7 days</string>
+    <string name="answers_30">Answers over 30 days</string>
+    <string name="today">Today</string>
+    <string name="day_answers">%1$s: %2$s</string>
+    <string name="day_accuracy">, %d%% correct</string>
+    <string name="goal_dashed">dashed line — goal %d</string>
+    <string name="today_lower">today</string>
+    <string name="accuracy_30">Accuracy over 30 days: %d%%</string>
+    <string name="week_reviews">Reviews this week</string>
+    <string name="week_reviews_hint">How many learned words will come up for review (excluding new ones)</string>
+    <string name="today_short">today</string>
+    <string name="most_forgotten">Forgotten most often</string>
+
+    <!-- Settings -->
+    <string name="section_appearance">Appearance</string>
+    <string name="language">Language</string>
+    <string name="lang_system">System</string>
+    <string name="theme">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="section_study">Study</string>
+    <string name="new_per_day">New words per day</string>
+    <string name="new_per_day_hint">How many new cards to add to “Study today”. Reviews are always shown, without a limit.</string>
+    <string name="daily_goal">Daily goal (answers)</string>
+    <string name="daily_goal_hint">When the goal is reached, the day counts toward your streak 🔥.</string>
+    <string name="section_reminder">Reminder</string>
+    <string name="remind_daily">Remind me every day</string>
+    <string name="remind_hint">Only if there is something to review or the goal isn\'t reached yet</string>
+    <string name="reminder_time">Time: %s</string>
+    <string name="test_notification">Test</string>
+    <string name="notif_permission_denied">Without notification permission the reminder won\'t work</string>
+    <string name="section_backup">Auto-backup</string>
+    <string name="backup_unsupported">Auto-backup requires Android 10. Use “Export backup” in the main screen menu.</string>
+    <string name="backup_weekly">Save a backup every week</string>
+    <string name="backup_hint">To “Downloads/Karticky”. The last 5 files are kept. They stay even if you uninstall the app — restore them via “Import backup”.</string>
+    <string name="backup_last">Last: %s</string>
+    <string name="backup_never">not yet</string>
+    <string name="backup_now">Back up now</string>
+    <string name="backup_saved">Saved: Downloads/Karticky/%s</string>
+    <string name="data_local">All data is stored only on this phone.</string>
+
+    <!-- Reminder notification -->
+    <string name="notif_channel">Daily reminder</string>
+    <string name="notif_title">Time to study Slovak</string>
+    <string name="notif_streak">🔥 %s streak — keep it going!</string>
+    <string name="notif_text">Today: %s</string>
+    <string name="notif_review">review %d</string>
+    <string name="notif_new">new %d</string>
+    <string name="notif_all_done">everything reviewed 🎉</string>
+
+    <!-- Data errors -->
+    <string name="err_open_file">Couldn\'t open the file</string>
+    <string name="err_write_file">Couldn\'t write the file</string>
+    <string name="err_create_file">Couldn\'t create the file</string>
+    <string name="err_no_decks_in_zip">No decks found in the archive (share.db)</string>
+    <string name="err_empty_decks">The decks in the archive are empty</string>
+    <string name="err_unknown_format">Unknown file format. Use a .zip from Flashcards Maker or a .json from this app.</string>
+    <string name="err_not_our_backup">This is not a backup from this app</string>
+    <string name="default_deck_name">Deck %d</string>
+    <string name="err_backup_unsupported">Auto-backup requires Android 10</string>
+    <string name="err_no_cards">No cards to back up</string>
+    <string name="tts_no_voice">No voice for “%s”. Install it in the text-to-speech settings.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- back card -->
+    <path android:fillColor="#EE1C25"
+        android:pathData="M40,30h34a4,4 0,0 1,4 4v30a4,4 0,0 1,-4 4h-34a4,4 0,0 1,-4 -4v-30a4,4 0,0 1,4 -4z" />
+    <!-- front card -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M32,40h34a4,4 0,0 1,4 4v30a4,4 0,0 1,-4 4h-34a4,4 0,0 1,-4 -4v-30a4,4 0,0 1,4 -4z" />
+    <!-- letter S -->
+    <path android:fillColor="#0B4EA2"
+        android:pathData="M57,49c-1.5,-1.6 -4,-2.6 -7,-2.6c-4.6,0 -7.8,2.4 -7.8,5.9c0,3.3 2.6,4.8 6.6,5.7c3.2,0.7 4.4,1.3 4.4,2.7c0,1.4 -1.4,2.3 -3.6,2.3c-2.3,0 -4.3,-0.9 -5.8,-2.4l-2.6,3c2,2 5,3.1 8.3,3.1c5,0 8.2,-2.4 8.2,-6.2c0,-3.3 -2.4,-4.8 -6.6,-5.7c-3.1,-0.7 -4.4,-1.2 -4.4,-2.6c0,-1.2 1.2,-2.1 3.2,-2.1c1.9,0 3.6,0.7 4.9,1.9z" />
+</vector>
