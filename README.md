@@ -8,7 +8,7 @@ An Android flashcards app for learning Slovak vocabulary. Everything stays on th
 - **Spaced repetition.** Eight levels with intervals of 1, 2, 4, 8, 16, 32 and 64 days, and four grades: Forgot, Hard, Good, Easy. A forgotten card drops two levels and comes back in the same session.
 - **Study today.** One button runs all due reviews first, then new words up to a daily limit (10 by default), so new words arrive in portions instead of all at once.
 - **Nine game modes:** flashcards, quiz, typing, listening, dictation, pairs, true/false, build the word, and noun gender (ten / tá / to).
-- **Typing checks:** a missing diacritic or a single typo counts as "almost", and an on-screen row of Slovak letters (á ä č ď é í ĺ ľ ň ó ô ŕ š ť ú ý ž) helps on keyboards without them.
+- **Built-in keyboard for Typing and Dictation** (Slovak with all diacritics, Ukrainian, Russian, English), so the system keyboard's autocorrect and word suggestions can't give the answer away. The system keyboard is still one tap away. A missing diacritic or a single typo counts as "almost".
 - **Pronunciation** through the system text-to-speech engine. It works offline once a Slovak voice is installed.
 - **Statistics:** daily streak, answers over 30 days, accuracy, a review forecast for the week, and the words you forget most often.
 - **Daily reminder,** sent only when there is something to review or the daily goal isn't reached yet.

@@ -274,4 +274,6 @@
     <string name="err_backup_unsupported">Auto-backup requires Android 10</string>
     <string name="err_no_cards">No cards to back up</string>
     <string name="tts_no_voice">No voice for “%s”. Install it in the text-to-speech settings.</string>
+    <string name="kb_system">System keyboard</string>
+    <string name="kb_app">App keyboard</string>
 </resources>

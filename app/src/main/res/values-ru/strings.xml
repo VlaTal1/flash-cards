@@ -258,4 +258,6 @@
         <item quantity="many">%d ответов</item>
         <item quantity="other">%d ответа</item>
     </plurals>
+    <string name="kb_system">Системная клавиатура</string>
+    <string name="kb_app">Клавиатура приложения</string>
 </resources>

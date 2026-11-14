@@ -258,4 +258,6 @@ Príď zajtra alebo trénuj vo voľnom režime.</string>
         <item quantity="many">%d odpovede</item>
         <item quantity="other">%d odpovedí</item>
     </plurals>
+    <string name="kb_system">Systémová klávesnica</string>
+    <string name="kb_app">Klávesnica aplikácie</string>
 </resources>

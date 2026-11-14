@@ -392,9 +392,14 @@ private fun TypingGame(questions: List<Question>, host: GameHost, audio: Boolean
     var input by remember(index) { mutableStateOf(TextFieldValue("")) }
     var verdict by remember(index) { mutableStateOf<TextUtil.Verdict?>(null) }
     var overridden by remember(index) { mutableStateOf(false) }
+    // The app keyboard is used whenever there is a layout for the answer language; the system
+    // keyboard (with its autocorrect) stays available behind a toggle.
+    val layout = KeyboardLayouts.forLanguage(q.answerLang)
+    var useSystemKeyboard by remember { mutableStateOf(false) }
+    val appKeyboard = layout != null && !useSystemKeyboard
     val focus = remember { FocusRequester() }
-    LaunchedEffect(index) {
-        runCatching { focus.requestFocus() }
+    LaunchedEffect(index, appKeyboard) {
+        if (!appKeyboard) runCatching { focus.requestFocus() }
         if (audio) { delay(300); host.speaker.speak(q.answer, q.answerLang) }
     }
 
@@ -409,49 +414,71 @@ private fun TypingGame(questions: List<Question>, host: GameHost, audio: Boolean
         })
         if (!audio) host.speaker.speak(q.answer, q.answerLang)
     }
+    fun insert(text: String) {
+        val t = input.text.substring(0, input.selection.start) + text + input.text.substring(input.selection.end)
+        input = TextFieldValue(t, TextRange(input.selection.start + text.length))
+    }
+    fun backspace() {
+        if (input.text.isEmpty()) return
+        val t = input.text.dropLast(1)
+        input = TextFieldValue(t, TextRange(t.length)) // keep the cursor at the end
+    }
 
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        if (audio) AudioPrompt(q.answer, q.answerLang, host, revealed = null, hint = q.prompt)
-        else PromptCard(q, host)
-        OutlinedTextField(
-            value = input,
-            onValueChange = { if (verdict == null) input = it },
-            label = { Text(stringResource(if (audio) R.string.what_heard else R.string.field_translation)) },
-            singleLine = true,
-            readOnly = verdict != null,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done,
-            ),
-            keyboardActions = KeyboardActions(onDone = { submit() }),
-            modifier = Modifier.fillMaxWidth().focusRequester(focus),
-        )
-        if (verdict == null && q.answerLang.startsWith("sk")) DiacriticsRow { l ->
-            val t = input.text.substring(0, input.selection.start) + l + input.text.substring(input.selection.end)
-            input = TextFieldValue(t, TextRange(input.selection.start + l.length))
+    val label = stringResource(if (audio) R.string.what_heard else R.string.field_translation)
+    val keyboardToggle: @Composable () -> Unit = {
+        if (layout != null && verdict == null) IconButton(onClick = { useSystemKeyboard = !useSystemKeyboard }) {
+            Icon(if (useSystemKeyboard) Icons.Default.KeyboardAlt else Icons.Default.Keyboard,
+                stringResource(if (useSystemKeyboard) R.string.kb_app else R.string.kb_system))
         }
-        when (verdict) {
-            TextUtil.Verdict.CORRECT -> FeedbackBanner(true, stringResource(R.string.correct), q.answer.takeIf { TextUtil.variants(it).size > 1 })
-            TextUtil.Verdict.ALMOST -> FeedbackBanner(true, stringResource(R.string.almost), q.answer)
-            TextUtil.Verdict.WRONG -> if (overridden) FeedbackBanner(true, stringResource(R.string.counted), q.answer)
-            else FeedbackBanner(false, stringResource(R.string.correct_answer), q.answer)
-            null -> {}
-        }
-        if (verdict == null) Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            OutlinedButton(onClick = { input = TextFieldValue(""); submit() }, Modifier.weight(1f).height(52.dp)) {
-                Text(stringResource(R.string.dont_know))
+    }
+
+    Column(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            if (audio) AudioPrompt(q.answer, q.answerLang, host, revealed = null, hint = q.prompt)
+            else PromptCard(q, host)
+            if (appKeyboard) {
+                AnswerDisplay(input.text, label, active = verdict == null, trailing = keyboardToggle)
+            } else {
+                OutlinedTextField(
+                    value = input,
+                    onValueChange = { if (verdict == null) input = it },
+                    label = { Text(label) },
+                    singleLine = true,
+                    readOnly = verdict != null,
+                    trailingIcon = keyboardToggle,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done,
+                    ),
+                    keyboardActions = KeyboardActions(onDone = { submit() }),
+                    modifier = Modifier.fillMaxWidth().focusRequester(focus),
+                )
+                if (verdict == null && q.answerLang.startsWith("sk")) DiacriticsRow { insert(it) }
             }
-            Button(onClick = { submit() }, Modifier.weight(1f).height(52.dp)) { Text(stringResource(R.string.check)) }
-        } else Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            if (verdict == TextUtil.Verdict.WRONG && !overridden && input.text.isNotBlank()) {
-                OutlinedButton(onClick = { overridden = true; host.overrideCorrect(q) }, Modifier.weight(1f).height(52.dp)) {
-                    Text(stringResource(R.string.i_was_right))
+            when (verdict) {
+                TextUtil.Verdict.CORRECT -> FeedbackBanner(true, stringResource(R.string.correct), q.answer.takeIf { TextUtil.variants(it).size > 1 })
+                TextUtil.Verdict.ALMOST -> FeedbackBanner(true, stringResource(R.string.almost), q.answer)
+                TextUtil.Verdict.WRONG -> if (overridden) FeedbackBanner(true, stringResource(R.string.counted), q.answer)
+                else FeedbackBanner(false, stringResource(R.string.correct_answer), q.answer)
+                null -> {}
+            }
+            if (verdict == null) Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedButton(onClick = { input = TextFieldValue(""); submit() }, Modifier.weight(1f).height(52.dp)) {
+                    Text(stringResource(R.string.dont_know))
                 }
+                Button(onClick = { submit() }, Modifier.weight(1f).height(52.dp)) { Text(stringResource(R.string.check)) }
+            } else Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (verdict == TextUtil.Verdict.WRONG && !overridden && input.text.isNotBlank()) {
+                    OutlinedButton(onClick = { overridden = true; host.overrideCorrect(q) }, Modifier.weight(1f).height(52.dp)) {
+                        Text(stringResource(R.string.i_was_right))
+                    }
+                }
+                Button(onClick = { index++ }, Modifier.weight(1f).height(52.dp)) { Text(stringResource(R.string.next)) }
             }
-            Button(onClick = { index++ }, Modifier.weight(1f).height(52.dp)) { Text(stringResource(R.string.next)) }
         }
+        if (appKeyboard && verdict == null) AppKeyboard(layout!!, onKey = ::insert, onBackspace = ::backspace)
     }
 }
 
